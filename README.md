@@ -1,24 +1,90 @@
-# arbitrage-cfd-btc
-Tried my best to achieve infinite money glitch in real life- failed miserably
-Cfd vs underlying assset
-by Anatolii Frolov
+Arbitrage CFD-BTC: Exploring the Infinite Money Glitch
+Author: Anatolii Frolov
+Project Goal: To explore the potential for arbitrage between Bitcoin (BTC/USD) and its CFD (Contract for Difference) by analyzing price discrepancies and developing a trading strategy.
 
-Let's explore all the points we need to adress in this project:
+Project Overview
+This project aims to identify and exploit arbitrage opportunities between Bitcoin (BTC/USD) and its CFD counterpart. The goal is to create a riskless strategy with an initial payoff of zero, leveraging mean-reversion and volatility-based models.
 
-We need to scoop up the data
-BTC/USD data with the 1s delays
-It's easy but requires the api key ( it was ruined , so just downloaded it)
-BTC/USD cfd data from dukascopy brokerage
-Here we needed to adress the problem of max one day data extraction
-It's solved by a library that was written by one guy https://github.com/algogenetic/dukascopy-1
-We need to convert with pct_change to be not iid but to contain that sweet mean-reversion that we need
-We need to adress the problem of CFD been traded on Swiss trading hours
-We can use the unused hours to calculate the volatility for period using variation of garch(preferably t-garch as I want this to be riskless strategy with initial payoff of zero)
-We can just delete the extra(unused hours)
-We need to introduce the points of entry for the model and exits
-Rsi for example (implementation in the document)
-MACD https://www.quantifiedstrategies.com/python-and-macd-trading-strategy/
-ATR https://www.quantifiedstrategies.com/average-true-range-trading-strategy-in-python/
-Teaching the regression on best combo of this two ways of buying -> setting up weights
-Backtesting the model on 2018 - 2021
-Results
+Key Steps and Challenges
+1. Data Collection
+BTC/USD Spot Data:
+Collected with 1-second delays using an API. Due to API key issues, the data was manually downloaded.
+
+BTC/USD CFD Data:
+Sourced from Dukascopy brokerage. A limitation was the maximum one-day data extraction, which was resolved using a custom library: algogenetic/dukascopy-1.
+
+2. Data Preprocessing
+Transformation:
+Applied pct_change to the data to introduce mean-reversion properties, which are crucial for the strategy.
+
+Trading Hours Adjustment:
+CFDs are traded during Swiss trading hours. Non-trading hours were used to calculate volatility using a variation of T-GARCH (preferred for its risk-neutral properties).
+
+Data Cleaning:
+Removed unused hours to align the datasets.
+
+3. Strategy Development
+Entry and Exit Points:
+Identified using technical indicators:
+
+RSI (Relative Strength Index): Implementation details are provided in the document.
+
+MACD (Moving Average Convergence Divergence): Python and MACD Trading Strategy.
+
+ATR (Average True Range): ATR Trading Strategy in Python.
+
+Model Training:
+Used regression to determine the optimal combination of indicators and assigned weights to each.
+
+4. Backtesting
+Timeframe:
+The model was backtested on data from 2018 to 2021.
+
+Results:
+The performance of the strategy was evaluated, and insights were documented.
+
+Tools and Libraries Used
+Data Collection:
+
+Dukascopy API wrapper: algogenetic/dukascopy-1.
+
+Data Analysis:
+
+Python libraries: pandas, numpy, statsmodels (for GARCH models).
+
+Technical Indicators:
+
+Custom implementations of RSI, MACD, and ATR.
+
+Backtesting:
+
+Custom backtesting framework.
+
+Results and Insights
+The project successfully identified potential arbitrage opportunities, but the "infinite money glitch" remained elusive. Key takeaways include:
+
+The importance of aligning trading hours and adjusting for volatility.
+
+The effectiveness of combining multiple technical indicators for entry and exit signals.
+
+The challenges of achieving a truly riskless strategy in real-world conditions.
+
+Future Work
+Expand the dataset to include more recent years.
+
+Explore additional indicators and machine learning models for improved predictions.
+
+Optimize the strategy for lower transaction costs and slippage.
+
+How to Use This Repository
+Clone the repository:
+
+bash
+Copy
+git clone https://github.com/your-username/arbitrage-cfd-btc.git
+Install the required dependencies:
+
+bash
+Copy
+pip install -r requirements.txt
+Run the scripts to preprocess data, train the model, and backtest the strategy.
